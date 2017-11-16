@@ -12,6 +12,10 @@ package model;
  * @author javi_
  */
 public class Email {
+
+    public static void saveCurrentEmail(Email email) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     String emailAdress;
     int atPosition;
     String aliasList;
@@ -22,11 +26,11 @@ public class Email {
         aliasList = "";    
     }
 
-    public String getEmail() {
+    public String getAdress() {
         return emailAdress;
     }
 
-    public void setEmail(String emailAdress) {
+    public void getAdress(String emailAdress) {
         this.emailAdress = emailAdress;
     }
 
@@ -49,5 +53,5 @@ public class Email {
     public void addAliasToList(String alias){
         this.aliasList += alias +"\n";
     }
-    
+       
 }

@@ -15,10 +15,9 @@ import model.Email;
 public class EmailController {
     
 
-    public static void generateAlias(String emailAdress, JTextArea outputArea) {
-
-        Email email = new Email(emailAdress);
-
+    public static void generateAlias(Email email, JTextArea outputArea) {
+        String emailAdress = email.getAdress();
+        
         if (emailAdress.indexOf("@") > 0) email.setAtPosition(emailAdress.indexOf("@"));
         email.addAliasToList(emailAdress.charAt(0) + "." + emailAdress.substring(1));  
         

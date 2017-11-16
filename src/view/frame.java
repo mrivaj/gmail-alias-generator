@@ -12,6 +12,8 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
 import controller.EmailController;
+import controller.FileController;
+import model.Email;
 
 
 /**
@@ -19,7 +21,8 @@ import controller.EmailController;
  * @author javi_
  */
 public class frame extends javax.swing.JFrame {
-    private String email;
+    Email email;
+    //private String email;
     //private int atPosition;
     private String list = "";
     /**
@@ -42,7 +45,7 @@ public class frame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         gmailText = new javax.swing.JTextField();
         generateButton = new javax.swing.JButton();
-        exportButton = new javax.swing.JButton();
+        exportAsTxtButton = new javax.swing.JButton();
         copyButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         outputArea = new javax.swing.JTextArea();
@@ -62,10 +65,10 @@ public class frame extends javax.swing.JFrame {
             }
         });
 
-        exportButton.setText("Export as .txt");
-        exportButton.addActionListener(new java.awt.event.ActionListener() {
+        exportAsTxtButton.setText("Export as .txt");
+        exportAsTxtButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exportButtonActionPerformed(evt);
+                exportAsTxtButtonActionPerformed(evt);
             }
         });
 
@@ -90,7 +93,7 @@ public class frame extends javax.swing.JFrame {
                 .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(exportButton)
+                .addComponent(exportAsTxtButton)
                 .addGap(52, 52, 52)
                 .addComponent(copyButton)
                 .addGap(78, 78, 78))
@@ -105,7 +108,7 @@ public class frame extends javax.swing.JFrame {
                     .addComponent(generateButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(exportButton)
+                    .addComponent(exportAsTxtButton)
                     .addComponent(copyButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -139,16 +142,17 @@ public class frame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
-        EmailController.generateAlias(gmailText.getText(), outputArea);
+        email = new Email(gmailText.getText());
+        EmailController.generateAlias(email, outputArea);
     }//GEN-LAST:event_generateButtonActionPerformed
 
-    private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportButtonActionPerformed
+    private void exportAsTxtButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsTxtButtonActionPerformed
         if (checkGeneratedEmails()){
-            writeList();
+            FileController.exportAsTxt(email);
         }else{
             JOptionPane.showMessageDialog(null, "You should generate the mail list first");
         }
-    }//GEN-LAST:event_exportButtonActionPerformed
+    }//GEN-LAST:event_exportAsTxtButtonActionPerformed
 
     private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
         if (checkGeneratedEmails()){
@@ -197,7 +201,7 @@ public class frame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton copyButton;
-    private javax.swing.JButton exportButton;
+    private javax.swing.JButton exportAsTxtButton;
     private javax.swing.JButton generateButton;
     private javax.swing.JTextField gmailText;
     private javax.swing.JLabel jLabel1;
@@ -207,28 +211,6 @@ public class frame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private boolean checkGeneratedEmails() {
-        return !list.equals("");
-    }
-
-    private void writeList() {
-        FileWriter fichero = null;
-        PrintWriter pw = null;    
-            try{
-                fichero = new FileWriter("txt/" + email + ".txt");
-                pw = new PrintWriter(fichero);
-                String[] arrayText = list.split(",");
-                for (int i = 0; i < arrayText.length; i++) {
-                    pw.println(arrayText[i]);
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            } finally{
-                try{
-                    if (null != fichero)
-                        fichero.close();
-                }catch (Exception e2){
-                    e2.printStackTrace();
-                }
-            }
+        return !email.getAliasList().equals("");
     }
 }
