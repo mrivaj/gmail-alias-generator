@@ -23,10 +23,11 @@ public class FileController {
         try{
             fichero = new FileWriter("txt/" + email.getAdress() + ".txt");
             pw = new PrintWriter(fichero);
-            String[] arrayText = email.getAliasList().split(",");
+            
+            String[] emailAdressArray = email.getAliasList().split(",");
         
-            for (int i = 0; i < arrayText.length; i++) {
-                pw.println(arrayText[i]);
+            for (int i = 0; i < emailAdressArray.length; i++) {
+                pw.println(emailAdressArray[i]);
             }
         }catch (IOException e){
         } finally{
