@@ -147,21 +147,13 @@ public class frame extends javax.swing.JFrame {
     }//GEN-LAST:event_generateButtonActionPerformed
 
     private void exportAsTxtButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsTxtButtonActionPerformed
-        if (checkGeneratedEmails()){
-            FileController.exportAsTxt(email);
-        }else{
-            JOptionPane.showMessageDialog(null, "You should generate the mail list first");
-        }
+        if (checkGeneratedEmails())  FileController.exportAsTxt(email);
+        else  JOptionPane.showMessageDialog(null, "You should generate the mail list first");
     }//GEN-LAST:event_exportAsTxtButtonActionPerformed
 
     private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
-        if (checkGeneratedEmails()){
-            StringSelection selection = new StringSelection(list);
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            clipboard.setContents(selection, selection);
-        }else{
-            JOptionPane.showMessageDialog(null, "You should generate the mail list first");
-        }
+        if (checkGeneratedEmails())  FileController.copyToClipboard(outputArea.getText());
+        else  JOptionPane.showMessageDialog(null, "You should generate the mail list first");
     }//GEN-LAST:event_copyButtonActionPerformed
 
     /**
