@@ -23,7 +23,8 @@ public class EmailController {
         String emailAdress = email.getAdress();
         if (emailAdress.indexOf("@") > 0) email.setAtPosition(emailAdress.indexOf("@"));  
         
-        if (emailAdress.indexOf("@") > 1) email.addAliasToList(emailAdress.charAt(0) + "." + emailAdress.substring(1));  // STANDARD FIRST CASE     
+        if (emailAdress.indexOf("@") > 1) email.addAliasToList(emailAdress.charAt(0) + "." + emailAdress.substring(1));   
         else email.addAliasToList(emailAdress);  // ADD FIRST CASE, IF ONLY HAS ONE LETTER
     }   
 }
+
