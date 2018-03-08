@@ -9,12 +9,25 @@ import model.Email;
  */
 public class EmailController {
     
-    public static void generateAlias(Email email, JTextArea outputArea) {
+    public static void generateAliasWithDots(Email email, JTextArea outputArea) {
         String emailAdress = email.getAdress();
         checkSpecialCases(email);
                
         for (int i = 2; i <= email.getAtPosition() - 1 ; i++) {
             email.addAliasToList(emailAdress.substring(0,i) + "." + emailAdress.substring(i, emailAdress.length()));
+        }
+        outputArea.setText(email.getAliasList());    
+    }
+    
+    public static void generateAliasWithNumbers(Email email, JTextArea outputArea) {
+        String emailAdress = email.getAdress();
+        emailAdress = emailAdress.substring(0, emailAdress.indexOf("@")) + "+";  
+        for (int i = 0; i < 10; i++) {
+            email.addAliasToList(emailAdress + "0" + i + "@gmail.com" );
+        }
+        
+        for (int i = 10; i < 100; i++) {
+            email.addAliasToList(emailAdress + i + "@gmail.com" );
         }
         outputArea.setText(email.getAliasList());    
     }
